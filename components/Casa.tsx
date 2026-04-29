@@ -1,4 +1,4 @@
-import {View, Text, Pressable} from "react-native";
+import { View, Text, Pressable } from "react-native";
 interface ITicTacToe {
     tabuleiro: string[][];
     settabuleiro: (tabuleiro: string[][]) => void;
@@ -7,8 +7,8 @@ interface ITicTacToe {
     vez: string;
     setvez: (vez: string) => void;
 }
-export default function Casa({tabuleiro, linha, coluna, vez, setvez, settabuleiro}: ITicTacToe) {
-    
+export default function Casa({ tabuleiro, linha, coluna, vez, setvez, settabuleiro }: ITicTacToe) {
+
     return (
         <Pressable
             style={{
@@ -17,19 +17,23 @@ export default function Casa({tabuleiro, linha, coluna, vez, setvez, settabuleir
                 backgroundColor: "lightgray",
                 borderWidth: 1,
                 borderColor: "black",
+                justifyContent: "center",
+                alignItems: "center",
             }}
             onPress={() => {
-                setvez(vez=="x"?"o":"x");
-                let novoTabuleiro = [...tabuleiro];
-                novoTabuleiro[linha][coluna] = vez?tabuleiro[linha][coluna]==null?vez:"":"";
-                settabuleiro(novoTabuleiro);
+                if (tabuleiro[linha][coluna] === "" && vez === "x") {
+                    const novoTabuleiro = tabuleiro.map(row => [...row]);
+                    novoTabuleiro[linha][coluna] = "x";
+                    settabuleiro(novoTabuleiro);
+                    setvez("o");
+                }
             }}
         >
-            {tabuleiro[linha][coluna] == "x" ? 
-                <Text style={{fontSize: 100, color: "red"}}>X</Text> :
-                tabuleiro[linha][coluna] == "o" ? 
-                <Text style={{fontSize: 100, color: "blue"}}>O</Text> :
-                null
+            {tabuleiro[linha][coluna] == "x" ?
+                <Text style={{ fontSize: 100, color: "red" }}>X</Text> :
+                tabuleiro[linha][coluna] == "o" ?
+                    <Text style={{ fontSize: 100, color: "blue" }}>O</Text> :
+                    null
             }
         </Pressable>
     );
